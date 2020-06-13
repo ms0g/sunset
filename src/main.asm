@@ -36,10 +36,9 @@ FrameCounter:  .res 1
   STA PPUSCROLL
   STA PPUSCROLL
 
-  LDX FrameCounter
-  INX
-  STX FrameCounter
-  CPX #$0F
+  INC FrameCounter
+  LDA FrameCounter
+  CMP #$0F
   BEQ @move
   JMP @done
 @move:
@@ -154,7 +153,7 @@ forever:
 
   LDX #$00
 :
-  LDA attribute,X
+  LDA attribute, X
   STA PPUDATA
 
   INX
@@ -193,13 +192,7 @@ forever:
 .proc move_right
   LDX #$00
 :
-  LDA TileAddrX, X
-  STA CurrentTileX
-  LDY CurrentTileX
-  INY
-  STY CurrentTileX
-  LDA CurrentTileX
-  STA TileAddrX, X
+  INC TileAddrX, X
   TXA
   CLC
   ADC #$04
@@ -213,13 +206,7 @@ forever:
 .proc move_left
   LDX #$00
 :
-  LDA TileAddrX, X
-  STA CurrentTileX
-  LDY CurrentTileX
-  DEY
-  STY CurrentTileX
-  LDA CurrentTileX
-  STA TileAddrX, X
+  DEC TileAddrX, X
   TXA
   CLC
   ADC #$04
