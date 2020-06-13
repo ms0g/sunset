@@ -7,7 +7,6 @@ TileAddrX=$0203
 .segment "ZEROPAGE"
 PtrBg:         .res 2
 DirFlag:       .res 1
-CurrentTileX:  .res 1
 FrameCounter:  .res 1
 
 
