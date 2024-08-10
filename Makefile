@@ -5,7 +5,7 @@ CA65=ca65
 LD=ld65
 LDFLAGS=-C $(CFG) 
 
-src/%.o : src/%.asm 
+src/%.o : src/%.s
 	$(CA65) $<
 $(TARGET): $(OBJS)
 	$(LD) $(LDFLAGS) $^ -o $@ 

@@ -217,7 +217,7 @@ forever:
 
 
 sprites:
-  .include "sprites.asm"
+  .include "sprites.s"
 
 background:
   .incbin "assets/background.nam"
