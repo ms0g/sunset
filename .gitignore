@@ -1,0 +1,8 @@
+# Compiled Object files
+*.o
+
+# Fceux Debugger file
+*.fdb
+
+# NES Rom file
+*.nes
