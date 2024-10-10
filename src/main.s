@@ -215,7 +215,7 @@ background:
 
 .segment "RODATA"
 palettes:
-  	.byte $13,$14,$24,$27, $13,$14,$24,$27, $13,$14,$24,$27, $13,$14,$10,$0F ; background palette
+  	.byte $13,$14,$24,$27, $13,$14,$24,$27, $13,$14,$24,$27, $13,$14,$37,$0F ; background palette
   	.byte $13,$14,$24,$27, $13,$05,$15,$14, $13,$02,$38,$3C, $13,$1C,$15,$14 ; sprite palette 
 
 attribute:
