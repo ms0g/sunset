@@ -6,7 +6,7 @@ TileAddrX=$0203
 
 .segment "ZEROPAGE"
 PtrBg:         	.res 2
-DirFlag:       	.res 1
+Direction:      .res 1
 FrameCounter:	.res 1
 SpriteCounter:	.res 1
 
@@ -45,9 +45,9 @@ SpriteCounter:	.res 1
 	
 	jsr move
 	
-	lda DirFlag
+	lda Direction
 	eor #$01
-	sta DirFlag
+	sta Direction
 @done:
 	; ppu clean up 
 	lda #%10010000 
@@ -67,21 +67,21 @@ SpriteCounter:	.res 1
 .proc main
   	ldx #$00
 @clrmem:
-	sta $0000, X ; $0000 => $00FF
-	sta $0100, X ; $0100 => $01FF
-	sta $0300, X
-	sta $0400, X
-	sta $0500, X
-	sta $0600, X
-	sta $0700, X
+	sta $0000, x ; $0000 => $00FF
+	sta $0100, x ; $0100 => $01FF
+	sta $0300, x
+	sta $0400, x
+	sta $0500, x
+	sta $0600, x
+	sta $0700, x
 	lda #$FF
-	sta $0200, X ; $0200 => $02FF
+	sta $0200, x ; $0200 => $02FF
 	lda #$00
 	inx
 	bne @clrmem
 
 	lda #$00
-	sta DirFlag
+	sta Direction
 	sta FrameCounter  
 	sta SpriteCounter
 	
@@ -89,7 +89,6 @@ SpriteCounter:	.res 1
 	jsr load_background
 	jsr load_attribute 
 	jsr load_sprite
-
 @vblankwait:       ; wait for another vblank before continuing
 	bit PPUSTATUS
 	bpl @vblankwait
@@ -111,7 +110,7 @@ forever:
 
 	ldx #$00
 :
-	lda palettes, X
+	lda palettes, x
 	sta PPUDATA
 	
 	inx
@@ -123,8 +122,8 @@ forever:
 .proc load_sprite
   	ldx #$00
 :
-	lda sprites, X
-	sta $0200, X
+	lda sprites, x
+	sta $0200, x
 	inx
 	cpx #$E0
 	bne :-
@@ -140,7 +139,7 @@ forever:
 
 	ldx #$00
 :
-	lda attribute, X
+	lda attribute, x
 	sta PPUDATA
 
 	inx
@@ -163,7 +162,7 @@ forever:
 	lda #>background
 	sta PtrBg+1
 :
-	lda (PtrBg), Y
+	lda (PtrBg), y
 	sta PPUDATA
 	iny
 	bne :-
@@ -181,14 +180,14 @@ forever:
 	lda SpriteCounter
 	cmp #$08
 	beq @changeDir
-	lda DirFlag
+	lda Direction
 	lsr A
 	bcs @left
 @right:
-	inc TileAddrX, X
+	inc TileAddrX, x
 	jmp @keepOn
 @left:
-	dec TileAddrX, X
+	dec TileAddrX, x
 @keepOn:
 	txa
 	clc
@@ -200,9 +199,9 @@ forever:
 @changeDir:
 	lda #$00
 	sta SpriteCounter
-	lda DirFlag
+	lda Direction
 	eor #$01
-	sta DirFlag
+	sta Direction
 	jmp :-
 @done:
 	rts
