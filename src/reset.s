@@ -5,20 +5,20 @@
 .export reset_handler
 
 .proc reset_handler
-  SEI         ; Disable all interrupts
-  CLD         ; Disable decimal mode
-  LDX #$40
-  STX $4017   ; Disable APU frame IRQ
-  LDX #$FF
-  TXS         ; Setup stack
-  INX         ; Now X=0
-  
-  STX PPUCTRL ; Disable NMI
-  STX PPUMASK ; Disable rendering
-  STX $4010   ; Disable DMC IRQs
+    sei         ; Disable all interrupts
+    cld         ; Disable decimal mode
+    ldx #$40
+    stx $4017   ; Disable APU frame IRQ
+    ldx #$FF
+    txs         ; Setup stack
+    inx         ; Now X=0
+    
+    stx PPUCTRL ; Disable NMI
+    stx PPUMASK ; Disable rendering
+    stx $4010   ; Disable DMC IRQs
 
 @vblankwait:
-  BIT PPUSTATUS
-  BPL @vblankwait
-  JMP main
+    bit PPUSTATUS
+    bpl @vblankwait
+    jmp main
 .endproc
