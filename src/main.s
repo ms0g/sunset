@@ -5,10 +5,9 @@ TileAddrY=$0200
 TileAddrX=$0203
 
 .segment "ZEROPAGE"
-PtrBg:         .res 2
-DirFlag:       .res 1
-FrameCounter:  .res 1
-
+PtrBg:         	.res 2
+DirFlag:       	.res 1
+FrameCounter:	.res 1
 
 .segment "CODE"
 .import reset_handler
@@ -17,7 +16,6 @@ FrameCounter:  .res 1
 .proc irq_handler
 	rti
 .endproc
-
 
 .proc nmi_handler
   	pha
@@ -72,7 +70,6 @@ FrameCounter:  .res 1
 	rti
 .endproc
 
-
 .proc main
   	ldx #$00
 @clrmem:
@@ -110,7 +107,6 @@ forever:
   	jmp forever
 .endproc
 
-
 .proc load_palette
 	ldx PPUSTATUS
 	ldx #$3F
@@ -129,7 +125,6 @@ forever:
 	rts
 .endproc
 
-
 .proc load_sprite
   	ldx #$00
 :
@@ -140,7 +135,6 @@ forever:
 	bne :-
 	rts
 .endproc
-
 
 .proc load_attribute
 	lda PPUSTATUS
@@ -159,7 +153,6 @@ forever:
 	bne :-
   	rts
 .endproc
-
 
 .proc load_background
 	lda PPUSTATUS
@@ -186,7 +179,6 @@ forever:
 	rts
 .endproc
 
-
 .proc move_right
   	ldx #$00
 :
@@ -200,7 +192,6 @@ forever:
 	rts
 .endproc
 
-
 .proc move_left
   	ldx #$00
 :
@@ -213,7 +204,6 @@ forever:
 	bne :-
 	rts
 .endproc
-
 
 sprites:
 	.include "sprites.s"
