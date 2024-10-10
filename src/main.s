@@ -8,6 +8,7 @@ TileAddrX=$0203
 PtrBg:         	.res 2
 DirFlag:       	.res 1
 FrameCounter:	.res 1
+SpriteCounter:	.res 1
 
 .segment "CODE"
 .import reset_handler
@@ -23,7 +24,7 @@ FrameCounter:	.res 1
   	pha
   	tya
   	pha
-  
+
 	lda #$00
 	sta OAMADDR
 	lda #$02
@@ -42,17 +43,10 @@ FrameCounter:	.res 1
 	lda #$00
 	sta FrameCounter  
 	
-	lsr DirFlag
-	bcs :++
-	jmp :+
-:
-	jsr move_right
-	lda #$01
-	sta DirFlag
-	jmp @done
-:
-	jsr move_left
-	lda #$00
+	jsr move
+	
+	lda DirFlag
+	eor #$01
 	sta DirFlag
 @done:
 	; ppu clean up 
@@ -66,7 +60,7 @@ FrameCounter:	.res 1
 	pla
 	tax
 	pla
-	
+
 	rti
 .endproc
 
@@ -89,6 +83,7 @@ FrameCounter:	.res 1
 	lda #$00
 	sta DirFlag
 	sta FrameCounter  
+	sta SpriteCounter
 	
 	jsr load_palette
 	jsr load_background
@@ -179,29 +174,37 @@ forever:
 	rts
 .endproc
 
-.proc move_right
+.proc move
   	ldx #$00
 :
+	inc SpriteCounter
+	lda SpriteCounter
+	cmp #$08
+	beq @changeDir
+	lda DirFlag
+	lsr A
+	bcs @left
+@right:
 	inc TileAddrX, X
-	txa
-	clc
-	adc #$04
-	tax
-	cpx #$E0
-	bne :-
-	rts
-.endproc
-
-.proc move_left
-  	ldx #$00
-:
+	jmp @keepOn
+@left:
 	dec TileAddrX, X
+@keepOn:
 	txa
 	clc
 	adc #$04
 	tax
 	cpx #$E0
 	bne :-
+	jmp @done
+@changeDir:
+	lda #$00
+	sta SpriteCounter
+	lda DirFlag
+	eor #$01
+	sta DirFlag
+	jmp :-
+@done:
 	rts
 .endproc
 
