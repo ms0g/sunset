@@ -1,5 +1,5 @@
 # sunset: Retro 80's Aesthetic
-This repository contains a vibrant 80's style sunset scene developed in 6502 assembly, designed to run on the NES (Nintendo Entertainment System). The scene features pixel art reminiscent of classic synthwave sunsets, using a limited 8-bit color palette that captures the nostalgic feel of retro gaming.
+A 80's style sunset scene developed in 6502 assembly, designed to run on the NES (Nintendo Entertainment System).
 For the ROM file, download it from [itch.io](https://ms0g.itch.io/sunset).
 
 <img src="assets/sunset.gif" alt="image" width="700" height="auto">
@@ -17,8 +17,5 @@ make
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the BSD 3-Clause License. See the LICENSE file for details.
 
-## Credits
-
-Developed by M. Sami Gürpınar
